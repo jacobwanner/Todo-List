@@ -4,17 +4,19 @@ const listeners = (() => {
     });
 })();
 
-const projectFactory = (projectName) => {
+const projectFactory = (projectName, projectDescription, projectDueDate) => {
     let name = projectName;
+    let description = projectDescription;
+    let dueDate = projectDueDate;
     let todoLists = [];
-    return {name, todoLists};
+    return {name, description, dueDate, todoLists};
 };
 
 const displayController = (() => {
     let counter = 0;
     let existingProjects = [];
-    let createProject = (projectName) => {
-        existingProjects.push(projectFactory(projectName, counter)); 
+    let createProject = (projectName, projectDescription, projectDueDate) => {
+        existingProjects.push(projectFactory(projectName, projectDescription, projectDueDate)); 
         domStuff.appendProject(projectName, counter);
         console.log(existingProjects);
         counter++;
@@ -28,19 +30,25 @@ let domStuff = (() => {
     const projectsContainer = document.getElementById("projectsContainer");
 
     let createProjectInput = () => {
-        let inputBox = document.createElement("input");
+        let titleBox = document.createElement("input");
+        let descriptionBox = document.createElement("input");
+        let dueDateBox = document.createElement("input");
         let submitInput = document.createElement("button");
         submitInput.innerText = "Submit";
-        projectsContainer.appendChild(inputBox);
+        projectsContainer.appendChild(titleBox);
+        projectsContainer.appendChild(descriptionBox);
+        projectsContainer.appendChild(dueDateBox);
         projectsContainer.appendChild(submitInput);
 
         submitInput.addEventListener("click", () => { 
-            displayController.createProject(inputBox.value);
+            displayController.createProject(titleBox.value, descriptionBox.value, dueDateBox.value);
 
-            inputBox.remove();
+            titleBox.remove();
+            descriptionBox.remove();
+            dueDateBox.remove();
             submitInput.remove();
-        })
-    }
+        });
+    };
     
     let appendProject = (projectName) => {
         let projectDiv = document.createElement("div");
@@ -63,9 +71,9 @@ let domStuff = (() => {
             } else if (e.target.nodeName == "BUTTON") {
                 //remove this page
                 console.log("Button Pressed");
-            }
-        })
-    }
+            };
+        });
+    };
     return {createProjectInput, appendProject};
 })();
 
