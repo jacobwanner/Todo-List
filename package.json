@@ -7,11 +7,18 @@
     "watch": "webpack --watch",
     "build": "webpack"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jacobwanner/Todo-List.git"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Jacob Wanner",
   "license": "ISC",
   "main": "webpack.config.js",
-  "description": "",
+  "bugs": {
+    "url": "https://github.com/jacobwanner/Todo-List/issues"
+  },
+  "homepage": "https://github.com/jacobwanner/Todo-List/#readme",
   "devDependencies": {
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
