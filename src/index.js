@@ -17,7 +17,7 @@ const displayController = (() => {
     let existingProjects = [];
     let createProject = (projectName, projectDescription, projectDueDate) => {
         existingProjects.push(projectFactory(projectName, projectDescription, projectDueDate)); 
-        domStuff.appendProject(projectName, counter);
+        domStuff.appendProject(projectName, projectDescription, projectDueDate);
         console.log(existingProjects);
         counter++;
         return existingProjects;
@@ -50,7 +50,7 @@ let domStuff = (() => {
         });
     };
     
-    let appendProject = (projectName) => {
+    let appendProject = (projectName, projectDescription, projectDueDate) => {
         let projectDiv = document.createElement("div");
         projectDiv.classList.add("projectDiv");
         projectsContainer.appendChild(projectDiv);
@@ -58,6 +58,14 @@ let domStuff = (() => {
         let projectNameSection = document.createElement("div");
         projectDiv.appendChild(projectNameSection);
         projectNameSection.innerText = projectName;
+
+        let projectDescriptionSection = document.createElement("div");
+        projectDiv.appendChild(projectDescriptionSection);
+        projectDescriptionSection.innerText = projectDescription;
+
+        let projectDueDateSection = document.createElement("div");
+        projectDiv.appendChild(projectDueDateSection);
+        projectDueDateSection.innerText = projectDueDate;
 
         let removeProjectButton = document.createElement("button");
         removeProjectButton.classList.add("removeProjectButton");
@@ -78,8 +86,4 @@ let domStuff = (() => {
 })();
 
 
-// existingProjects[i] = {
-//     title: "Lord of the Rings",
-//     description: "by J.R.R. Tolkein",
-//     dueDate: "pretty old",
-// }
+displayController.createProject("The Lord of the Rings", "by JRR Tolkien", "due in 60 days")
