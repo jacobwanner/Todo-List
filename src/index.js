@@ -56,14 +56,17 @@ let domStuff = (() => {
         projectsContainer.appendChild(projectDiv);
 
         let projectNameSection = document.createElement("div");
+        projectNameSection.classList.add("title");
         projectDiv.appendChild(projectNameSection);
         projectNameSection.innerText = projectName;
 
         let projectDescriptionSection = document.createElement("div");
+        projectDescriptionSection.classList.add("description");
         projectDiv.appendChild(projectDescriptionSection);
         projectDescriptionSection.innerText = projectDescription;
 
         let projectDueDateSection = document.createElement("div");
+        projectDueDateSection.classList.add("dueDate");
         projectDiv.appendChild(projectDueDateSection);
         projectDueDateSection.innerText = projectDueDate;
 
@@ -85,5 +88,5 @@ let domStuff = (() => {
     return {createProjectInput, appendProject};
 })();
 
-
+displayController.createProject("The Hobbit", "by JRR Tolkien", "due in 30 days");
 displayController.createProject("The Lord of the Rings", "by JRR Tolkien", "due in 60 days")
