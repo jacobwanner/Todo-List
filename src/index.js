@@ -4,25 +4,37 @@ const listeners = (() => {
     });
 })();
 
-const projectFactory = (projectName, projectDescription, projectDueDate) => {
+const projectFactory = (projectName, projectDescription, projectDueDate, todoTask) => {
     let name = projectName;
     let description = projectDescription;
     let dueDate = projectDueDate;
-    let todoLists = [];
-    return {name, description, dueDate, todoLists};
+    let task = todoTask;
+    return {name, description, dueDate, task};
 };
-
+// const todoFactory = (todoTask) => {
+//     let task = todoTask;
+//     return {task}
+// }
 const displayController = (() => {
-    let counter = 0;
+    let projectCounter = 0;
     let existingProjects = [];
+    let todoCounter = 0;
+    let todoList = [];
     let createProject = (projectName, projectDescription, projectDueDate) => {
         existingProjects.push(projectFactory(projectName, projectDescription, projectDueDate)); 
         domStuff.appendProject(projectName, projectDescription, projectDueDate);
         console.log(existingProjects);
-        counter++;
+        projectCounter++;
         return existingProjects;
     }
-    return {createProject};
+    let createTask = (todoTask) => {
+        todoList.push(projectFactory(todoTask));
+        domStuff.appendProject(todoTask);
+        console.log(todoList);
+        todoCounter++;
+        return todoList;
+    }
+    return {createProject, createTask};
 })();
 
 let domStuff = (() => {
@@ -49,6 +61,20 @@ let domStuff = (() => {
             submitInput.remove();
         });
     };
+    let createTaskInput = () => {
+        let taskBox = document.createElement("input");
+        let submitInput = document.createElement("button");
+        submitInput.innerText = "submit";
+        projectsContainer.appendChild(taskBox);
+        projectsContainer.appendChild(submitInput);
+
+        submitInput.addEventListener("click", () => {
+            displayController.createTask(taskBox.value);
+
+            taskBox.remove();
+            submitInput.remove();
+        });
+    };
     
     let appendProject = (projectName, projectDescription, projectDueDate) => {
         let projectDiv = document.createElement("div");
@@ -58,7 +84,7 @@ let domStuff = (() => {
         let projectDueDateSection = document.createElement("div");
         projectDueDateSection.classList.add("dueDate");
         projectDiv.appendChild(projectDueDateSection);
-        projectDueDateSection.innerText = projectDueDate;
+        projectDueDateSection.innerText = "due in " + projectDueDate;
 
         let projectNameSection = document.createElement("div");
         projectNameSection.classList.add("title");
@@ -70,6 +96,11 @@ let domStuff = (() => {
         projectDiv.appendChild(projectDescriptionSection);
         projectDescriptionSection.innerText = projectDescription;
 
+        let addTodoButton = document.createElement("button");
+        addTodoButton.classList.add("addTodoButton");
+        addTodoButton.innerText = "+ to-do";
+        projectDiv.appendChild(addTodoButton);
+
         let removeProjectButton = document.createElement("button");
         removeProjectButton.classList.add("removeProjectButton");
         removeProjectButton.innerText = "delete project";
@@ -79,7 +110,10 @@ let domStuff = (() => {
             if(e.target.nodeName == "DIV") {
                 //go to this page
                 console.log("Div Pressed");
-            } else if (e.target.classList == "removeProjectButton") {
+            } else if(e.target.classList == "addTodoButton") {
+                createTaskInput();
+                console.log("add todo");
+            }else if (e.target.classList == "removeProjectButton") {
                 //remove this page
                 console.log("Bad Button Pressed");
             };
@@ -88,5 +122,5 @@ let domStuff = (() => {
     return {createProjectInput, appendProject};
 })();
 
-displayController.createProject("The Hobbit", "by JRR Tolkien", "due in 30 days");
-displayController.createProject("The Lord of the Rings", "by JRR Tolkien", "due in 60 days")
+displayController.createProject("The Hobbit", "by JRR Tolkien", "30 days");
+displayController.createProject("The Lord of the Rings", "by JRR Tolkien", "60 days")
