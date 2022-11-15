@@ -55,6 +55,11 @@ let domStuff = (() => {
         projectDiv.classList.add("projectDiv");
         projectsContainer.appendChild(projectDiv);
 
+        let projectDueDateSection = document.createElement("div");
+        projectDueDateSection.classList.add("dueDate");
+        projectDiv.appendChild(projectDueDateSection);
+        projectDueDateSection.innerText = projectDueDate;
+
         let projectNameSection = document.createElement("div");
         projectNameSection.classList.add("title");
         projectDiv.appendChild(projectNameSection);
@@ -65,11 +70,6 @@ let domStuff = (() => {
         projectDiv.appendChild(projectDescriptionSection);
         projectDescriptionSection.innerText = projectDescription;
 
-        let projectDueDateSection = document.createElement("div");
-        projectDueDateSection.classList.add("dueDate");
-        projectDiv.appendChild(projectDueDateSection);
-        projectDueDateSection.innerText = projectDueDate;
-
         let removeProjectButton = document.createElement("button");
         removeProjectButton.classList.add("removeProjectButton");
         removeProjectButton.innerText = "delete project";
@@ -79,9 +79,9 @@ let domStuff = (() => {
             if(e.target.nodeName == "DIV") {
                 //go to this page
                 console.log("Div Pressed");
-            } else if (e.target.nodeName == "BUTTON") {
+            } else if (e.target.classList == "removeProjectButton") {
                 //remove this page
-                console.log("Button Pressed");
+                console.log("Bad Button Pressed");
             };
         });
     };
